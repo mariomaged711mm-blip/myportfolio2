@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mario Melika — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream-1:#decdba;   /* deeper beige block */
+    --cream-2:#f4e8dd;   /* lighter card / panel tone */
+    --white:#ffffff;
+    --ink:#181614;
+    --ink-soft:#6b6259;
+    --blue:#1546e3;
+    --blue-dark:#0f36b0;
+    --line:#e9e2d8;
+    --radius-card:6px;
+    --nav-h:72px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    background:var(--white);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:'Poppins',sans-serif;margin:0;}
+  p{margin:0;}
+  button{font-family:inherit;}
+  a{color:inherit;}
+
+  :focus-visible{outline:2px solid var(--blue);outline-offset:3px;}
+
+  /* ---------- top navigation ---------- */
+  .topnav{
+    position:sticky;top:0;z-index:100;
+    height:var(--nav-h);
+    background:rgba(255,255,255,0.96);
+    border-bottom:1px solid var(--line);
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 32px;
+    gap:24px;
+  }
+  .brand{
+    font-family:'Poppins',sans-serif;font-weight:700;font-size:17px;
+    white-space:nowrap;
+  }
+  .brand span{color:var(--blue);}
+  .nav-links{
+    display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;
+  }
+  .nav-links::-webkit-scrollbar{display:none;}
+  .nav-link{
+    background:none;border:none;cursor:pointer;
+    font-size:13.5px;font-weight:600;color:var(--ink);
+    padding:10px 14px;border-radius:999px;white-space:nowrap;
+    transition:background .2s,color .2s;
+  }
+  .nav-link:hover{color:var(--ink);background:#f6f2ec;}
+  .nav-link.active{color:var(--white);background:var(--blue);font-weight:700;}
+
+  /* ---------- shared layout ---------- */
+  .page{display:none;}
+  .page.active{display:block;animation:fadeUp .45s ease both;}
+  @keyframes fadeUp{
+    from{opacity:0;transform:translateY(10px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+  .page-shell{position:relative;min-height:calc(100vh - var(--nav-h));overflow:hidden;}
+  .container{
+    position:relative;z-index:2;max-width:1180px;margin:0 auto;
+    padding:88px 40px 96px;
+  }
+  .blk{position:absolute;z-index:1;}
+
+  .eyebrow{
+    display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.14em;
+    color:var(--blue);text-transform:uppercase;margin-bottom:14px;
+  }
+  .headline{font-size:42px;font-weight:700;line-height:1.12;letter-spacing:-.01em;}
+  .subhead-text{
+    margin-top:18px;font-size:16.5px;line-height:1.65;color:var(--ink-soft);
+    max-width:620px;
+  }
+
+  /* ---------- buttons & tags ---------- */
+  .btn{
+    display:inline-block;font-size:13.5px;font-weight:600;letter-spacing:.03em;
+    text-transform:uppercase;padding:14px 26px;border-radius:999px;
+    cursor:pointer;border:1.5px solid transparent;transition:transform .15s,opacity .15s;
+  }
+  .btn:hover{transform:translateY(-1px);}
+  .btn-solid{background:var(--blue);color:var(--white);}
+  .btn-solid:hover{background:var(--blue-dark);}
+  .btn-outline{background:transparent;border-color:var(--ink);color:var(--ink);}
+  .btn-outline:hover{background:var(--ink);color:var(--white);}
+  .btn-row{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;}
+
+  .tags-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px;}
+  .tag{
+    font-size:12.5px;font-weight:600;color:var(--ink);background:var(--cream-2);
+    padding:7px 14px;border-radius:999px;border:1px solid var(--line);
+  }
+
+  /* ---------- card grid (projects / web dev / software / database) ---------- */
+  .card-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;margin-top:44px;
+  }
+  .proj-card{
+    background:var(--white);border:1px solid var(--line);border-radius:var(--radius-card);
+    padding:24px;
+  }
+  .proj-card .top-bar{height:4px;width:36px;background:var(--blue);border-radius:2px;margin-bottom:16px;}
+  .proj-card h3{font-size:17px;font-weight:700;margin-bottom:8px;}
+  .proj-card p{font-size:14px;line-height:1.55;color:var(--ink-soft);margin-bottom:14px;}
+  .proj-card .tags-row{margin-top:0;}
+
+  /* ---------- HOME ---------- */
+  .home-grid{display:grid;grid-template-columns:minmax(280px,38%) 1fr;min-height:calc(100vh - var(--nav-h));}
+  .home-left{
+    background:var(--cream-1);display:flex;align-items:center;justify-content:center;
+    padding:60px 30px;
+  }
+  .card-panel{
+    width:100%;max-width:280px;background:var(--cream-2);border-radius:8px;
+    overflow:hidden;box-shadow:0 24px 48px rgba(24,22,20,0.12);
+  }
+  .card-panel .avatar-wrap{padding:36px 0 18px;display:flex;justify-content:center;}
+  .avatar{
+    width:120px;height:120px;border-radius:50%;
+    background:linear-gradient(135deg,var(--blue),#5670f0);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Poppins',sans-serif;font-weight:700;font-size:34px;color:var(--white);
+    overflow:hidden;
+  }
+  .avatar img{width:100%;height:100%;object-fit:cover;display:block;}
+  .card-panel .card-name{text-align:center;font-size:21px;font-weight:700;padding:0 16px;}
+  .card-panel .divider{width:34px;height:2px;background:var(--blue);margin:14px auto;}
+  .card-panel .card-role{
+    text-align:center;font-size:11.5px;font-weight:600;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--ink-soft);padding-bottom:30px;
+  }
+  .card-social{
+    background:var(--white);display:flex;justify-content:center;gap:18px;
+    padding:18px 0;border-top:1px solid var(--line);
+  }
+  .card-social a{
+    width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    color:var(--ink);transition:background .2s,color .2s;
+  }
+  .card-social a:hover{background:var(--ink);color:var(--white);}
+  .card-social svg{width:15px;height:15px;}
+
+  .home-right{
+    background:var(--white);display:flex;flex-direction:column;justify-content:center;
+    padding:60px 56px;
+  }
+  .home-right .headline{font-size:54px;}
+  .home-right .intro-para{margin-top:34px;font-size:15px;line-height:1.7;color:var(--ink-soft);max-width:520px;}
+
+  /* ---------- WEBSITE DESIGN mockups ---------- */
+  .mockup-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;margin-top:44px;}
+  .mockup-frame{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--white);}
+  .mockup-bar{height:26px;background:#f3efe8;display:flex;align-items:center;gap:5px;padding:0 10px;}
+  .mockup-bar span{width:7px;height:7px;border-radius:50%;background:#d9d0c2;}
+  .mockup-body{height:130px;padding:14px;display:flex;flex-direction:column;gap:8px;}
+  .mockup-body .m-block{border-radius:3px;}
+  .mockup-body .m1{height:18px;width:60%;background:var(--cream-2);}
+  .mockup-body .m2{height:60px;width:100%;background:#eee3d6;}
+  .mockup-body .m3{height:14px;width:80%;background:#f1ece3;}
+  .mockup-cap{padding:14px 16px 18px;font-size:13.5px;font-weight:600;}
+
+  /* ---------- DATABASE er-diagram ---------- */
+  .er-panel{
+    background:var(--cream-2);border-radius:8px;padding:26px;margin-top:40px;
+    display:inline-flex;align-items:center;gap:0;
+  }
+  .er-box{
+    background:var(--white);border:1.5px solid var(--ink);border-radius:5px;
+    padding:10px 16px;font-size:12.5px;font-weight:700;
+  }
+  .er-line{width:40px;height:1.5px;background:var(--ink-soft);}
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:60px;margin-top:36px;}
+  .about-grid p+p{margin-top:16px;}
+  .about-grid p{font-size:15px;line-height:1.75;color:var(--ink-soft);}
+  .quick-facts{display:flex;flex-direction:column;gap:18px;}
+  .fact{border-bottom:1px solid var(--line);padding-bottom:14px;}
+  .fact .f-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;margin-bottom:4px;}
+  .fact .f-value{font-size:14.5px;font-weight:600;}
+
+  .timeline{margin-top:56px;}
+  .timeline h3{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;margin-bottom:24px;}
+  .t-item{display:flex;gap:22px;padding:16px 0;border-top:1px solid var(--line);}
+  .t-item:last-child{border-bottom:1px solid var(--line);}
+  .t-year{font-family:'Poppins',sans-serif;font-weight:700;font-size:15px;color:var(--blue);min-width:54px;}
+  .t-text{font-size:14.5px;color:var(--ink-soft);padding-top:1px;}
+
+  /* ---------- CONTACT ---------- */
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;margin-top:40px;}
+  .form-field{margin-bottom:18px;display:flex;flex-direction:column;gap:7px;}
+  .form-field label{font-size:12.5px;font-weight:600;letter-spacing:.04em;}
+  .form-field input,.form-field textarea{
+    border:1.5px solid var(--line);border-radius:6px;padding:12px 14px;
+    font-size:14.5px;font-family:inherit;background:var(--white);resize:vertical;
+  }
+  .form-field input:focus,.form-field textarea:focus{border-color:var(--blue);}
+  .form-status{margin-top:14px;font-size:13.5px;color:var(--blue);min-height:18px;}
+  .contact-side{display:flex;flex-direction:column;gap:26px;}
+  .contact-line .f-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;margin-bottom:5px;}
+  .contact-line .f-value{font-size:15.5px;font-weight:600;}
+  .email-cta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .cta-note{
+    display:inline-flex;align-items:center;gap:4px;
+    font-family:'Poppins',sans-serif;font-style:italic;font-weight:600;
+    font-size:12.5px;color:var(--blue);transform:rotate(-4deg);white-space:nowrap;
+  }
+  .cta-note svg{width:22px;height:16px;flex-shrink:0;}
+  .contact-social{display:flex;gap:14px;margin-top:6px;}
+  .contact-social a{
+    width:38px;height:38px;border-radius:50%;border:1.5px solid var(--ink);
+    display:flex;align-items:center;justify-content:center;transition:background .2s,color .2s;
+  }
+  .contact-social a:hover{background:var(--ink);color:var(--white);}
+  .contact-social svg{width:16px;height:16px;}
+
+  /* ---------- decorative background blocks per page ---------- */
+  .page-projects .blk-band{top:0;left:0;width:100%;height:300px;background:var(--cream-1);}
+  .page-design .blk-side{top:0;right:0;width:30%;height:100%;background:var(--cream-2);}
+  .page-design .blk-corner{top:0;left:0;width:130px;height:130px;background:var(--cream-1);}
+  .page-webdev .blk-bottom{bottom:0;left:0;width:100%;height:230px;background:var(--cream-1);}
+  .page-software .blk-tr{top:0;right:0;width:170px;height:170px;background:var(--cream-2);}
+  .page-software .blk-bl{bottom:0;left:0;width:220px;height:220px;background:var(--cream-1);}
+  .page-database .blk-strip{top:0;left:0;width:16%;height:100%;background:var(--cream-1);}
+  .page-about .blk-soft{bottom:0;right:0;width:42%;height:46%;background:var(--cream-2);}
+  .page-contact .blk-corner{bottom:0;right:0;width:200px;height:200px;background:var(--cream-1);border-radius:200px 0 0 0;}
+
+  /* ---------- slide controller ---------- */
+  .slide-ctrl{
+    position:fixed;bottom:26px;left:50%;transform:translateX(-50%);
+    z-index:90;display:flex;align-items:center;gap:14px;
+    background:rgba(255,255,255,0.92);border:1px solid var(--line);
+    border-radius:999px;padding:8px 10px;box-shadow:0 12px 30px rgba(24,22,20,0.12);
+    backdrop-filter:blur(6px);
+  }
+  .slide-btn{
+    width:36px;height:36px;border-radius:50%;border:none;background:var(--blue);
+    color:var(--white);display:flex;align-items:center;justify-content:center;cursor:pointer;
+    transition:background .2s,transform .15s;
+  }
+  .slide-btn:hover{background:var(--blue-dark);transform:translateY(-1px);}
+  .slide-btn svg{width:15px;height:15px;}
+  .slide-count{font-size:12.5px;font-weight:600;color:var(--ink-soft);min-width:46px;text-align:center;font-variant-numeric:tabular-nums;}
+
+  /* ---------- responsive ---------- */
+  @media (max-width:900px){
+    .home-grid{grid-template-columns:1fr;}
+    .home-left{padding:48px 24px;}
+    .home-right{padding:48px 24px 80px;}
+    .home-right .headline{font-size:40px;}
+    .about-grid,.contact-grid{grid-template-columns:1fr;gap:36px;}
+    .container{padding:64px 24px 110px;}
+    .page-design .blk-side{width:100%;height:38%;top:auto;bottom:0;}
+    .page-database .blk-strip{width:100%;height:140px;top:0;left:0;}
+  }
+  @media (max-width:560px){
+    .topnav{padding:0 16px;height:auto;flex-wrap:wrap;gap:8px;padding-top:10px;padding-bottom:10px;}
+    .nav-links{width:100%;justify-content:flex-start;}
+    .headline{font-size:32px;}
+    .home-right .headline{font-size:32px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .page.active{animation:none;}
+    .btn:hover,.slide-btn:hover{transform:none;}
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <div class="brand">Mario <span>Melika</span></div>
+  <nav class="nav-links" id="navLinks">
+    <button class="nav-link" data-page="home">Home</button>
+    <button class="nav-link" data-page="projects">Projects</button>
+    <button class="nav-link" data-page="about">About</button>
+    <button class="nav-link" data-page="webdev">Web Dev</button>
+    <button class="nav-link" data-page="software">Software</button>
+    <button class="nav-link" data-page="database">Database</button>
+    <button class="nav-link" data-page="design">Web Design</button>
+    <button class="nav-link" data-page="contact">Contact</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ============ HOME ============ -->
+  <section class="page page-home" data-page="home">
+    <div class="home-grid">
+      <div class="home-left">
+        <div class="card-panel">
+          <div class="avatar-wrap"><div class="avatar"><img src="profile.jpg" alt="Mario Melika" onerror="this.style.display='none'; this.parentElement.textContent='MM';"></div></div>
+          <div class="card-name">Mario Melika</div>
+          <div class="divider"></div>
+          <div class="card-role">Full-Stack Developer</div>
+          <div class="card-social">
+            <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
+            <a href="#" aria-label="Code repositories"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="8 6 3 12 8 18"/><polyline points="16 6 21 12 16 18"/></svg></a>
+            <a href="#" aria-label="Website"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.5 6 3.5 9s-1 6.5-3.5 9c-2.5-2.5-3.5-6-3.5-9s1-6.5 3.5-9z"/></svg></a>
+            <a href="#" aria-label="Resume document"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></a>
+          </div>
+        </div>
+      </div>
+      <div class="home-right">
+        <span class="eyebrow">Portfolio</span>
+        <h1 class="headline">Hi, I'm Mario.</h1>
+        <p class="subhead-text">I design and build software end to end — from the interface you click to the database underneath it.</p>
+        <div class="btn-row">
+          <button class="btn btn-solid" data-goto="projects">View My Work</button>
+          <button class="btn btn-outline" data-goto="contact">Say Hello</button>
+        </div>
+        <p class="intro-para">I'm a full-stack developer and designer based in the UK, working across website design, web and software development, and database architecture. I like projects where I can own a problem from the first sketch through to the last migration.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PERSONAL PROJECTS ============ -->
+  <section class="page page-projects" data-page="projects">
+    <div class="page-shell">
+      <div class="blk blk-band"></div>
+      <div class="container">
+        <span class="eyebrow">Personal Projects</span>
+        <h2 class="headline">Things I built because I was curious.</h2>
+        <p class="subhead-text">Side projects, weekend builds, and the occasional rabbit hole that turned into something real.</p>
+        <div class="card-grid">
+          <div class="proj-card">
+            <div class="top-bar"></div>
+            <h3>Habit Atlas</h3>
+            <p>A habit-tracking app with streak visualisation and weekly review prompts.</p>
+            <div class="tags-row"><span class="tag">React</span><span class="tag">Node</span><span class="tag">PostgreSQL</span></div>
+          </div>
+          <div class="proj-card">
+            <div class="top-bar"></div>
+            <h3>Recipe Box</h3>
+            <p>A recipe manager that scales ingredient quantities and converts units automatically.</p>
+            <div class="tags-row"><span class="tag">Vue</span><span class="tag">Firebase</span></div>
+          </div>
+          <div class="proj-card">
+            <div class="top-bar"></div>
+            <h3>Pixel Pomodoro</h3>
+            <p>A retro-styled focus timer with customisable pixel-art themes.</p>
+            <div class="tags-row"><span class="tag">JavaScript</span><span class="tag">Canvas API</span></div>
+          </div>
+          <div class="proj-card">
+            <div class="top-bar"></div>
+            <h3>Commit Companion</h3>
+            <p>A CLI tool that drafts commit messages from your staged diff.</p>
+            <div class="tags-row"><span class="tag">Python</span><span class="tag">Git</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WEBSITE DESIGN ============ -->
+  <section class="page page-design" data-page="design">
+    <div class="page-shell">
+      <div class="blk blk-side"></div>
+      <div class="blk blk-corner"></div>
+      <div class="container">
+        <span class="eyebrow">Website Design</span>
+        <h2 class="headline">Interfaces that earn their simplicity.</h2>
+        <p class="subhead-text">I design layouts, type systems, and component libraries before a single line of production code gets written. Every screen starts as a wireframe, then a style guide, then a prototype people can click through.</p>
+        <div class="tags-row">
+          <span class="tag">Figma</span><span class="tag">Adobe XD</span><span class="tag">Design Systems</span><span class="tag">Prototyping</span><span class="tag">Accessibility (WCAG)</span>
+        </div>
+        <div class="mockup-grid">
+          <div class="mockup-frame">
+            <div class="mockup-bar"><span></span><span></span><span></span></div>
+            <div class="mockup-body"><div class="m-block m1"></div><div class="m-block m2"></div><div class="m-block m3"></div></div>
+            <div class="mockup-cap">Marketing site redesign</div>
+          </div>
+          <div class="mockup-frame">
+            <div class="mockup-bar"><span></span><span></span><span></span></div>
+            <div class="mockup-body"><div class="m-block m1"></div><div class="m-block m2"></div><div class="m-block m3"></div></div>
+            <div class="mockup-cap">Mobile-first dashboard</div>
+          </div>
+          <div class="mockup-frame">
+            <div class="mockup-bar"><span></span><span></span><span></span></div>
+            <div class="mockup-body"><div class="m-block m1"></div><div class="m-block m2"></div><div class="m-block m3"></div></div>
+            <div class="mockup-cap">Component library & design system</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WEBSITE DEVELOPMENT ============ -->
+  <section class="page page-webdev" data-page="webdev">
+    <div class="page-shell">
+      <div class="blk blk-bottom"></div>
+      <div class="container">
+        <span class="eyebrow">Website Development</span>
+        <h2 class="headline">From design file to deployed site.</h2>
+        <p class="subhead-text">I build responsive, accessible websites that load fast and hold up across browsers — static sites, CMS-driven sites, and full front-end applications.</p>
+        <div class="tags-row">
+          <span class="tag">HTML5</span><span class="tag">CSS3</span><span class="tag">JavaScript</span><span class="tag">React</span><span class="tag">Next.js</span><span class="tag">Tailwind CSS</span>
+        </div>
+        <div class="card-grid">
+          <div class="proj-card">
+            <div class="top-bar"></div>
+            <h3>Studio Portfolio Site</h3>
+            <p>Static marketing site with a CMS-driven blog and image-heavy case studies.</p>
+            <div class="tags-row"><span class="tag">Next.js</span><span class="tag">Tailwind</span></div>
+          </div>
+          <div class="proj-card">
+            <div class="top-bar"></div>
+            <h3>Restaurant Booking Site</h3>
+            <p>Reservation widget showing live table availability across multiple locations.</p>
+            <div class="tags-row"><span class="tag">React</span><span class="tag">Node</span></div>
+          </div>
+          <div class="proj-card">
+            <div class="top-bar"></div>
+            <h3>Fundraising Landing Page</h3>
+            <p>Donation flow rebuilt and optimised for mobile conversion.</p>
+            <div class="tags-row"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">Stripe</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SOFTWARE DEVELOPMENT ============ -->
+  <section class="page page-software" data-page="software">
+    <div class="page-shell">
+      <div class="blk blk-tr"></div>
+      <div class="blk blk-bl"></div>
+      <div class="container">
+        <span class="eyebrow">Software Development</span>
+        <h2 class="headline">Programs that solve one specific, annoying problem.</h2>
+        <p class="subhead-text">Outside the browser, I write the scripts, services, and small applications that automate the boring parts.</p>
+        <div class="tags-row">
+          <span class="tag">Python</span><span class="tag">Java</span><span class="tag">C#</span><span class="tag">Go</span><span class="tag">Bash</span>
+        </div>
+        <div class="card-grid">
+          <div class="proj-card">
+            <div class="top-bar"></div>
+            <h3>Invoice Automator</h3>
+            <p>Desktop app that generates and emails monthly invoices from a billing spreadsheet.</p>
+            <div class="tags-row"><span class="tag">Python</span><span class="tag">Tkinter</span></div>
+          </div>
+          <div class="proj-card">
+            <div class="top-bar"></div>
+            <h3>Log Triage Service</h3>
+            <p>Background service that classifies and routes error logs to the right team.</p>
+            <div class="tags-row"><span class="tag">Go</span></div>
+          </div>
+          <div class="proj-card">
+            <div class="top-bar"></div>
+            <h3>Inventory Sync Tool</h3>
+            <p>Keeps stock counts consistent across two separate point-of-sale systems.</p>
+            <div class="tags-row"><span class="tag">C#</span><span class="tag">REST APIs</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DATABASE DEVELOPMENT ============ -->
+  <section class="page page-database" data-page="database">
+    <div class="page-shell">
+      <div class="blk blk-strip"></div>
+      <div class="container">
+        <span class="eyebrow">Database Development</span>
+        <h2 class="headline">Schemas that don't fall over at scale.</h2>
+        <p class="subhead-text">I design relational and document schemas, write the migrations, and tune the slow queries before they become a problem.</p>
+        <div class="tags-row">
+          <span class="tag">PostgreSQL</span><span class="tag">MySQL</span><span class="tag">MongoDB</span><span class="tag">Redis</span><span class="tag">SQL</span>
+        </div>
+        <div class="er-panel">
+          <div class="er-box">Users</div><div class="er-line"></div><div class="er-box">Orders</div><div class="er-line"></div><div class="er-box">Products</div>
+        </div>
+        <div class="card-grid">
+          <div class="proj-card">
+            <div class="top-bar"></div>
+            <h3>Order Pipeline Schema</h3>
+            <p>Normalised schema handling multi-currency orders and partial refunds.</p>
+            <div class="tags-row"><span class="tag">PostgreSQL</span></div>
+          </div>
+          <div class="proj-card">
+            <div class="top-bar"></div>
+            <h3>Analytics Warehouse</h3>
+            <p>Denormalised reporting tables built for fast, large-scale queries.</p>
+            <div class="tags-row"><span class="tag">BigQuery</span><span class="tag">SQL</span></div>
+          </div>
+          <div class="proj-card">
+            <div class="top-bar"></div>
+            <h3>Session Store</h3>
+            <p>Redis-backed session layer that cut login latency significantly.</p>
+            <div class="tags-row"><span class="tag">Redis</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ME ============ -->
+  <section class="page page-about" data-page="about">
+    <div class="page-shell">
+      <div class="blk blk-soft"></div>
+      <div class="container">
+        <span class="eyebrow">About Me</span>
+        <h2 class="headline">A bit more about how I work.</h2>
+        <div class="about-grid">
+          <div>
+            <p>Hi, I'm Mario Melika. I'm currently studying Level 2 Computing at Uxbridge College, with a focus on software development. Outside of class, most of my evenings go into the kind of small personal projects you'll find on the Projects page — usually started to solve a problem I personally had.</p>
+            <div class="tags-row">
+              <span class="tag">JavaScript / TypeScript</span><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">Python</span><span class="tag">SQL & NoSQL</span><span class="tag">UI/UX Design</span><span class="tag">Git</span>
+            </div>
+          </div>
+          <div class="quick-facts">
+            <div class="fact"><div class="f-label">Based in</div><div class="f-value">United Kingdom</div></div>
+            <div class="fact"><div class="f-label">Focus</div><div class="f-value">Web, Software & Database Development</div></div>
+            <div class="fact"><div class="f-label">Currently</div><div class="f-value">Open to new projects</div></div>
+          </div>
+        </div>
+        <div class="timeline">
+          <h3>A rough timeline</h3>
+          <div class="t-item"><div class="t-year">2018</div><div class="t-text">Started a Computer Science degree.</div></div>
+          <div class="t-item"><div class="t-year">2021</div><div class="t-text">Took on my first freelance website projects.</div></div>
+          <div class="t-item"><div class="t-year">2023</div><div class="t-text">Moved into full-stack and database-focused work.</div></div>
+          <div class="t-item"><div class="t-year">2026</div><div class="t-text">Building this portfolio — today.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ME ============ -->
+  <section class="page page-contact" data-page="contact">
+    <div class="page-shell">
+      <div class="blk blk-corner"></div>
+      <div class="container">
+        <span class="eyebrow">Contact</span>
+        <h2 class="headline">Let's build something.</h2>
+        <p class="subhead-text">Have a project, a question, or just want to say hi? Send a message and I'll get back to you.</p>
+        <div class="contact-grid">
+          <form id="contactForm">
+            <div class="form-field">
+              <label for="cf-name">Name</label>
+              <input type="text" id="cf-name" required>
+            </div>
+            <div class="form-field">
+              <label for="cf-email">Email</label>
+              <input type="email" id="cf-email" required>
+            </div>
+            <div class="form-field">
+              <label for="cf-message">Message</label>
+              <textarea id="cf-message" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-solid">Send Message</button>
+            <div class="form-status" id="formStatus"></div>
+          </form>
+          <div class="contact-side">
+            <div class="contact-line">
+              <div class="f-label">Email</div>
+              <div class="f-value email-cta">
+                mariomaged711mm@gmail.com
+                <span class="cta-note">
+                  <svg viewBox="0 0 40 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4c8 0 10 16 18 16M14 16l6 4 1-7"/></svg>
+                  let's get started
+                </span>
+              </div>
+            </div>
+            <div class="contact-line"><div class="f-label">Phone</div><div class="f-value">07849817519</div></div>
+            <div class="contact-line"><div class="f-label">Location</div><div class="f-value">United Kingdom</div></div>
+            <div>
+              <div class="f-label" style="margin-bottom:10px;">Elsewhere</div>
+              <div class="contact-social">
+                <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
+                <a href="#" aria-label="Code repositories"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="8 6 3 12 8 18"/><polyline points="16 6 21 12 16 18"/></svg></a>
+                <a href="#" aria-label="Website"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 3.5 6 3.5 9s-1 6.5-3.5 9c-2.5-2.5-3.5-6-3.5-9s1-6.5 3.5-9z"/></svg></a>
+                <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 8.5h-1.5A2 2 0 0 0 11.5 10.5v2H9.5v3h2v6.5h3V15.5h2l.5-3h-2.5v-1.5a.5.5 0 0 1 .5-.5h2v-3Z"/></svg></a>
+                <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" fill="currentColor" stroke="none"/></svg></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="slide-ctrl">
+  <button class="slide-btn" id="prevBtn" aria-label="Previous page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <span class="slide-count" id="slideCount">01 / 08</span>
+  <button class="slide-btn" id="nextBtn" aria-label="Next page">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+</div>
+
+<script>
+  const pages = ['home','projects','about','webdev','software','database','design','contact'];
+  let current = 0;
+
+  const navLinks = document.querySelectorAll('.nav-link');
+  const pageEls = document.querySelectorAll('.page');
+  const slideCount = document.getElementById('slideCount');
+
+  function showPage(index){
+    current = (index + pages.length) % pages.length;
+    const id = pages[current];
+
+    pageEls.forEach(el => el.classList.toggle('active', el.dataset.page === id));
+    navLinks.forEach(btn => btn.classList.toggle('active', btn.dataset.page === id));
+    slideCount.textContent = String(current + 1).padStart(2,'0') + ' / ' + String(pages.length).padStart(2,'0');
+    window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
+  }
+
+  navLinks.forEach(btn => btn.addEventListener('click', () => showPage(pages.indexOf(btn.dataset.page))));
+  document.querySelectorAll('[data-goto]').forEach(btn =>
+    btn.addEventListener('click', () => showPage(pages.indexOf(btn.dataset.goto)))
+  );
+
+  document.getElementById('prevBtn').addEventListener('click', () => showPage(current - 1));
+  document.getElementById('nextBtn').addEventListener('click', () => showPage(current + 1));
+
+  document.addEventListener('keydown', (e) => {
+    const tag = document.activeElement.tagName;
+    if(tag === 'INPUT' || tag === 'TEXTAREA') return;
+    if(e.key === 'ArrowRight') showPage(current + 1);
+    if(e.key === 'ArrowLeft') showPage(current - 1);
+  });
+
+  const form = document.getElementById('contactForm');
+  const status = document.getElementById('formStatus');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    status.textContent = "Got it — thanks! (This is a demo form, so nothing was actually sent.)";
+    form.reset();
+  });
+
+  showPage(0);
+</script>
+
+</body>
+</html>
